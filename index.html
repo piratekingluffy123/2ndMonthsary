@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy 2 Monthsary</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <span class="ornament"></span>
+
+  <header>
+    <span class="eyebrow">2 months together</span>
+    <h1>Happy 2 Monthsary,<br><em>babi</em> ♡</h1>
+    <p class="subtitle">A special piece of art — made only for you</p>
+
+    <div class="divider">
+      <span class="divider-dot"></span>
+      <span class="divider-dot"></span>
+      <span class="divider-dot"></span>
+    </div>
+
+    <div class="lyrics">
+      ฉันรักในความไม่ perfect ของเธอ<br>
+      แบบที่เธอเป็นของเธอ<br>
+      โดยที่ฉันไม่เคยรู้ตัว<br>
+      I'm fallin' in-love with you...
+      <cite>— every letter of this portrait is those words</cite>
+    </div>
+  </header>
+
+  <section class="portrait-wrap">
+    <div class="canvas-frame">
+      <span class="corner tl"></span>
+      <span class="corner tr"></span>
+      <span class="corner bl"></span>
+      <span class="corner br"></span>
+      <canvas id="output-canvas"></canvas>
+    </div>
+
+    <div id="status">
+      <span class="spinner" id="spin-icon"></span>
+      <span id="status-text">Painting your portrait with love...</span>
+    </div>
+
+    <button id="download-btn">Save this moment</button>
+  </section>
+
+  <footer>
+    <span class="bottom-ornament"></span>
+
+    <p class="footer-main">
+      Every single letter you see in this picture<br>
+      is a word I feel for you —<br>
+      written over and over,<br>
+      because once is never enough.
+    </p>
+
+    <p class="footer-thai">รักมากที่สุดในโลกเลย</p>
+    <p class="footer-thai-tr">I love you the most in this whole world</p>
+
+    <p class="footer-note">
+      Happy 2 months, my love.<br>
+      Thank you for being you.
+    </p>
+  </footer>
+
+  <script>
+    const outCanvas = document.getElementById('output-canvas');
+    const ctx = outCanvas.getContext('2d');
+    const statusEl = document.getElementById('status-text');
+    const spinIcon = document.getElementById('spin-icon');
+    const downloadBtn = document.getElementById('download-btn');
+
+    const lyrics = "ฉันรักในความไม่ perfect ของเธอแบบที่เธอเป็นของเธอโดยที่ฉันไม่เคยรู้ตัวI'm fallin' in-love with you...สิ่งเดียวที่ฉันนั้นรู้เธอคือสิ่งที่ฉันตามหามาแสนนาน oh";
+
+    function renderPortrait(img) {
+      const gridWidth = 180;
+      const scaleFactor = gridWidth / img.width;
+      const gridHeight = Math.floor(img.height * scaleFactor);
+
+      const temp = document.createElement('canvas');
+      const tempCtx = temp.getContext('2d');
+      temp.width = gridWidth;
+      temp.height = gridHeight;
+
+      tempCtx.imageSmoothingEnabled = true;
+      tempCtx.imageSmoothingQuality = 'high';
+      tempCtx.drawImage(img, 0, 0, gridWidth, gridHeight);
+
+      const { data: pixels } = tempCtx.getImageData(0, 0, gridWidth, gridHeight);
+
+      const fontSize = 8;
+      outCanvas.width = gridWidth * fontSize;
+      outCanvas.height = gridHeight * fontSize;
+
+      ctx.fillStyle = '#080507';
+      ctx.fillRect(0, 0, outCanvas.width, outCanvas.height);
+
+      ctx.font = `bold ${fontSize}px "Courier New", monospace`;
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'top';
+
+      let charIdx = 0;
+      for (let y = 0; y < gridHeight; y++) {
+        for (let x = 0; x < gridWidth; x++) {
+          const i = (y * gridWidth + x) * 4;
+          const r = pixels[i];
+          const g = pixels[i + 1];
+          const b = pixels[i + 2];
+
+          const boost = 1.3;
+          const br = Math.min(255, Math.round(r * boost));
+          const bg = Math.min(255, Math.round(g * boost));
+          const bb = Math.min(255, Math.round(b * boost));
+
+          const char = lyrics[charIdx % lyrics.length];
+          charIdx++;
+
+          ctx.fillStyle = `rgb(${br},${bg},${bb})`;
+          ctx.fillText(char, x * fontSize, y * fontSize);
+        }
+      }
+
+      outCanvas.style.display = 'block';
+      spinIcon.style.display = 'none';
+      statusEl.textContent = '✦  Your portrait is ready';
+      downloadBtn.style.display = 'inline-block';
+    }
+
+    const img = new Image();
+    img.onload = () => renderPortrait(img);
+    img.onerror = () => {
+      spinIcon.style.display = 'none';
+      statusEl.textContent = "Could not find images/1.png — make sure it's in the same folder.";
+    };
+    img.src = 'images/1.png';
+
+    downloadBtn.addEventListener('click', () => {
+      const a = document.createElement('a');
+      a.download = 'our-monthsary.png';
+      a.href = outCanvas.toDataURL('image/png');
+      a.click();
+    });
+  </script>
+
+</body>
+</html>

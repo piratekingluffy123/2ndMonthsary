@@ -1,0 +1,228 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --rose: #c8536a;
+  --rose-light: #e8a0ae;
+  --rose-pale: #f5dde3;
+  --cream: #fdf6f0;
+  --ink: #1a1118;
+  --muted: #9a7a84;
+}
+
+body {
+  background: var(--ink);
+  min-height: 100vh;
+  font-family: 'Inter', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+.ornament {
+  width: 1px;
+  height: 60px;
+  background: linear-gradient(to bottom, transparent, var(--rose));
+  margin: 0 auto;
+  display: block;
+}
+
+header {
+  text-align: center;
+  padding: 48px 32px 40px;
+  max-width: 560px;
+  width: 100%;
+}
+
+.eyebrow {
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--rose);
+  margin-bottom: 20px;
+  display: block;
+}
+
+h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.4rem, 7vw, 3.6rem);
+  font-weight: 300;
+  color: var(--cream);
+  line-height: 1.1;
+  margin-bottom: 10px;
+  letter-spacing: -0.01em;
+}
+
+h1 em { font-style: italic; color: var(--rose-light); }
+
+.subtitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.05rem;
+  font-weight: 300;
+  color: var(--muted);
+  margin-bottom: 28px;
+  letter-spacing: 0.05em;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  justify-content: center;
+  margin-bottom: 28px;
+}
+
+.divider::before, .divider::after {
+  content: '';
+  height: 1px;
+  width: 60px;
+  background: var(--rose);
+  opacity: 0.4;
+}
+
+.divider-dot {
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: var(--rose);
+}
+
+.lyrics {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.15rem;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--rose-pale);
+  line-height: 2;
+  opacity: 0.85;
+}
+
+.lyrics cite {
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 16px;
+}
+
+.portrait-wrap {
+  width: 100%;
+  max-width: 900px;
+  padding: 0 20px 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.canvas-frame {
+  position: relative;
+  width: 100%;
+}
+
+.corner { position: absolute; width: 20px; height: 20px; opacity: 0.5; }
+.corner.tl { top: -8px; left: -8px; border-top: 1px solid var(--rose); border-left: 1px solid var(--rose); }
+.corner.tr { top: -8px; right: -8px; border-top: 1px solid var(--rose); border-right: 1px solid var(--rose); }
+.corner.bl { bottom: -8px; left: -8px; border-bottom: 1px solid var(--rose); border-left: 1px solid var(--rose); }
+.corner.br { bottom: -8px; right: -8px; border-bottom: 1px solid var(--rose); border-right: 1px solid var(--rose); }
+
+#output-canvas {
+  display: none;
+  width: 100%;
+  height: auto;
+  border-radius: 2px;
+  image-rendering: pixelated;
+}
+
+#status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  min-height: 48px;
+}
+
+.spinner {
+  width: 18px; height: 18px;
+  border: 1.5px solid var(--rose);
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+#download-btn {
+  display: none;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--rose-light);
+  background: transparent;
+  border: 1px solid rgba(200, 83, 106, 0.3);
+  padding: 12px 28px;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+  border-radius: 1px;
+}
+
+#download-btn:hover { border-color: var(--rose); color: var(--rose-pale); }
+
+footer {
+  text-align: center;
+  padding: 0 20px 48px;
+  max-width: 480px;
+}
+
+.footer-main {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1.2rem;
+  color: var(--rose-pale);
+  line-height: 1.9;
+  margin-bottom: 20px;
+  opacity: 0.9;
+}
+
+.footer-thai {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem;
+  color: var(--rose-light);
+  margin-bottom: 8px;
+  letter-spacing: 0.02em;
+}
+
+.footer-thai-tr {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 24px;
+}
+
+.footer-note {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+.bottom-ornament {
+  width: 1px;
+  height: 48px;
+  background: linear-gradient(to top, transparent, var(--rose));
+  margin: 0 auto 24px;
+  display: block;
+}
